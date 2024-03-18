@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vợ tôi là Riche</title>
+     <!-- description -->
+     <meta name="description" content="Kho ảnh về vợ tôi:3">
+     <!-- keywords -->
+     <meta name="keywords" content="Riche, pon no michi, ponnomichi, riche, Riche Hayashi">
+     <!-- author -->
+     <meta name="author" content="Hec Tran">
+
+     <!-- thumbnail -->
+        <meta property="og:image" content="https://i.ibb.co/wzM7X0m/Screenshot-4.png">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .gallery-img {
+      width: 100%;
+      height: auto;
+    }
+
+    .zoomed {
+      width: 100%; 
+      height: auto;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      background-color: rgba(0, 0, 0, 0.5);
+      transition: width 0.5s, height 0.5s;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2 style="color: pink">Kho ảnh vợ tôi</h2>
+  <pre>
+    <code>Đây là những gì vợ tôi có: Xinh đẹp, tài giỏi, tốt tính, hào phóng, giàu có.... (còn nữa)</code>
+  </pre>
+  <div id="image-gallery" class="row">
+  </div>
+  <hr>
+  <h2 style="color: pink">Con mèo đáng yêu của toi</h2>
+ <img src="https://i.ibb.co/wzM7X0m/Screenshot-4.png" alt="Screenshot-4">
+
+ <br><br>
+</div>
+
+<script>
+  
+  async function loadListImageFormUrl () {
+    const url = 'https://raw.githubusercontent.com/hectran12/richelavotoi/main/img.txt';
+    const response = await fetch(url);
+    var data = await response.text();
+    var listImages = data.split('\n');
+    listImages= listImages.filter(function (el) {
+      return el != "";
+    });
+    return listImages;
+  }
+   function populateGallery(imagesArray) {
+    var galleryContainer = document.getElementById('image-gallery');
+    galleryContainer.innerHTML = ''; 
+
+    imagesArray.forEach(function(imageUrl) {
+      var imgElement = document.createElement('img');
+      imgElement.src = imageUrl;
+
+      imgElement.classList.add('gallery-img');
+
+      var colDiv = document.createElement('div');
+      colDiv.classList.add('col-md-4', 'mb-3');
+      colDiv.appendChild(imgElement);
+
+      galleryContainer.appendChild(colDiv);
+
+      imgElement.addEventListener("click", function () {
+        if (imgElement.classList.contains("zoomed")) {
+          imgElement.classList.remove("zoomed");
+        } else {
+          imgElement.classList.add("zoomed");
+        }
+      });
+    });
+  }
+
+  async function main() {
+    var listImages = await loadListImageFormUrl();
+    populateGallery(listImages);
+  }
+  main();
+</script>
+
+</body>
+</html>
